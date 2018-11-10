@@ -45,7 +45,7 @@ class FreezeRequest(object):
             return self.return_()
 
         if rsp.status_code != 200:
-            self.msg = 'error with wrong requests status code : %s' % rsp.status_code
+            self.msg = 'error with wrong requests status code : %s. content: %s' % (rsp.status_code, rsp.content)
             self.code = -1
             self.logger.error(self.msg)
             return self.return_()
@@ -60,7 +60,7 @@ class FreezeRequest(object):
 
         if self._handle:
             try:
-                self.data = self._handle(data)
+                self.data = self._handle(self.data)
             except Exception as e:
                 self.msg = 'error when handle_func: %s' % e
                 self.code = -1
